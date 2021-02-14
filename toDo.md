@@ -1,1 +1,1 @@
-[] Add sentiment analysis.
+- [ ] Add sentiment analysis.
