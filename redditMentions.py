@@ -19,6 +19,7 @@ subreddits = [
     'https://www.reddit.com/r/options/new.rss',
     'https://www.reddit.com/r/options_trading/new.rss',
     'https://www.reddit.com/r/optionstrading/new.rss',
+    'https://www.reddit.com/r/Stock_Picks/new.rss'
 ]
 
 BLACKLIST = [
@@ -113,7 +114,7 @@ if __name__ == '__main__':
                     exportLinks(entry['link'])
                     ts = getTickers(entry['content'][0]['value'])
                     for t in ts:
-                        today = date.today()
+                        today = pd.to_datetime('today').normalize()
                         sub = item.split('/')[-2]
                         loc = df.loc[(df['ticker'] == t) & (df['date'] == today) & (df['sub'] == sub)]
                         if loc.empty:
