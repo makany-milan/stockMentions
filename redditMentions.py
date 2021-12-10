@@ -7,6 +7,8 @@ import re
 from datetime import date
 import csv
 
+EXPORT_FOLDER = r'D:\stockMentions'
+
 
 subreddits = [
     'https://www.reddit.com/r/wallstreetbets/new.rss',
@@ -38,7 +40,7 @@ BLACKLIST = [
 
 
 WHITELIST = []
-with open(r'C:\Users\Milan\OneDrive\Desktop\Dad\RedditMentions\data\tickers.csv', 'r') as r:
+with open(fr'{EXPORT_FOLDER}\data\tickers.csv', 'r') as r:
     reader = csv.reader(r)
     for row in reader:
         ticker = row[0]
@@ -90,13 +92,13 @@ def getTickers(blob: str):
         
 
 def exportLinks(link: str):
-    with open(r'C:\Users\Milan\OneDrive\Desktop\Dad\RedditMentions\data\links.txt', 'a') as a:
+    with open(fr'{EXPORT_FOLDER}\data\links.txt', 'a') as a:
         a.write(link + '\n')
 
 
 def importLinks():
     links = []
-    with open(r'C:\Users\Milan\OneDrive\Desktop\Dad\RedditMentions\data\links.txt', 'r') as r:
+    with open(fr'{EXPORT_FOLDER}\data\links.txt', 'r') as r:
         for line in r:
             links.append(line.strip())
     return links
@@ -104,7 +106,7 @@ def importLinks():
 
 if __name__ == '__main__':
     read = importLinks()
-    df = pd.read_excel(r'C:/Users/Milan/OneDrive/Desktop/Dad/RedditMentions/data/stockData.xlsx', engine='openpyxl')
+    df = pd.read_excel(fr'{EXPORT_FOLDER}\data\stockData.xlsx', engine='openpyxl')
     # df = pd.DataFrame(columns=['date', 'sub', 'ticker', 'mentions'])
     for item in subreddits:
         r = getFeed(item)
@@ -125,6 +127,6 @@ if __name__ == '__main__':
                 else:
                     pass
 
-    w = pd.ExcelWriter(r'C:/Users/Milan/OneDrive/Desktop/Dad/RedditMentions/data/stockData.xlsx')
+    w = pd.ExcelWriter(fr'{EXPORT_FOLDER}\data\stockData.xlsx')
     df.to_excel(w, index=False)
     w.close()
